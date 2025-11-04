@@ -20,6 +20,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: voltage-profile
-        path: IEEE-123-voltage-profile.png
+        path: IEEE-37-voltage-profile.png
     - name: List all files
       run: ls -R
