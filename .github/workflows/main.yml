@@ -16,3 +16,8 @@ jobs:
 
     - name: Run simulation
       run: gridlabd main.glm
+    - name: Upload voltage profile PNG
+      uses: actions/upload-artifact@v4
+      with:
+        name: voltage-profile
+        path: IEEE-123-voltage-profile.png
