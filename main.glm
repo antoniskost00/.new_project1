@@ -1,5 +1,5 @@
-#ifmissing "8500.glm"
-#model get IEEE/8500
+#ifmissing "123.glm"
+#model get IEEE/123
 #endif
-#include "8500.glm"
-#output "IEEE-8500-voltage-profile.png" -t profile -l 10
+#include "123.glm"
+#output "IEEE-123-voltage-profile.png" -t profile -l 10
