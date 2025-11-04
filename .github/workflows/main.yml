@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: lfenergy/arras:develop
-    
+   
     steps:
     - uses: actions/checkout@v3
 
@@ -21,3 +21,5 @@ jobs:
       with:
         name: voltage-profile
         path: IEEE-123-voltage-profile.png
+    - name: List all files
+      run: ls -R
