@@ -5,6 +5,69 @@
 modify load_1.constant_power_A 48.0+24.0j kVA;
 modify load_2.constant_impedance_B 100+10j Ohm;
 modify load_4.constant_power_C 0+0j kVA;
+module generators;
+
+object diesel_dg 
+{
+    parent node_8;
+    Gen_mode CONSTANTPQ;
+    Gen_status ONLINE;
+    Gen_type SYNCHRONOUS;
+    pf 1.0;
+    cylinders 1;
+    stroke 2;
+    speed 360 1/min;
+    torque 680;
+}
+#ifmissing "CA-Chino_Airport.glm"
+#weather get CA-Chino_Airport
+#endif
+#input "CA-Chino_Airport.tmy3"
+clock
+{
+    timezone America/Los_Angeles;
+    starttime "2020-07-01 12:00:00 PDT";
+    stoptime "2020-07-01 12:00:00 PDT";
+}
+object meter
+{
+    name meter_10;
+    parent load_10;
+    phases AN;
+    nominal_voltage 2401.7711;
+    object inverter 
+    {
+        name inv_10;
+        phases AN;
+        rated_power 25 kVA;
+        object solar 
+        {
+            name solar_10;
+            parent inv_10;
+            rated_power 4.0 kVA;
+            area 100 sf;
+            tilt_angle 45.0 deg;
+            efficiency 13.5%;
+            orientation_azimuth 180;
+        };
+    };
+// Task 3 - Wind turbine on load 28
+object meter {
+    name meter_28;
+    parent load_28;
+    phases ABCN;
+    nominal_voltage 2401.7711;
+    object windturb_dg 
+    {
+        parent meter_28;
+        phases ABCN;
+        Gen_status ONLINE;
+        Gen_type INDUCTION;
+        Gen_mode CONSTANTP;
+        Turbine_Model GENERIC_IND_SMALL;
+        Rated_VA 100 kVA;
+    };
+}
 object load 
 {
     name load_115;
@@ -32,6 +95,5 @@ object load
     constant_power_A_real (load_114.constant_power_A_real*2); // double load_114
     constant_power_A_reac (load_114.constant_power_A_reac*2); // double load_114
     nominal_voltage 2401.7771;
-    constant_current_Α = constant_power_Α / nominal_voltage
 }
 #output "IEEE-123-voltage-profile.png" -t profile -l 10
