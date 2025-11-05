@@ -9,6 +9,27 @@ modify load_4.constant_power_C 0+0j kVA;
 module generators;
 object meter
 {
+    parent load_75;
+    nominal_voltage 2401.7771;
+    phaces CN;
+    object inverter
+    {
+        rated_power 20KW;
+        object battery
+        {
+            generator_status ONLINE;
+            generator_mode CONSTANT_PQ;
+            rfb_size HOUSEHOLD;
+            use_internal_battery_model TRUE;
+            battery_state CHARGING;
+            rated_power 10KW;
+            battery_load -10KW;
+            
+        };
+};
+}
+object meter
+{
     parent load_1;
     nominal_voltage 2401.7771;
     phases ABCN;
