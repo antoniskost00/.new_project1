@@ -30,6 +30,8 @@ jobs:
           ${{ runner.os }}-
     - name: List working directory
       run: ls -l
+    - name: Generate historical.glm if missing
+      run: gridlabd-python -m gridlabd.nsrdb_weather -y=2020 -p="37.5,-122.4" -g=historical.glm
     - name: Run simulation
       run: gridlabd main.glm
       
