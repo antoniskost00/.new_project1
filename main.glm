@@ -13,32 +13,26 @@ schedule setpoint
     * * * 10-4 6-0 18.0;
     * * * 5-9 6-0 24.0; 
 }
+module generators;
 object meter
 {
     parent load_1;
     nominal_voltage 2401.7771;
     phases ABCN;
-    object building
-{
-    building_type RETAIL;
-
-    // inputs
-    NH 4;
-    floor_area 150 m^2;
-    TS setpoint;
-
-    temperature_source "forecast.temperature";
-    electric_heat TRUE;
-    electrification_fraction 0.5;
-    electrification_efficiency 2.0;
-    occupancy 4;
-    PV 200 sf;
-    PX 10 kW;
-    BS 10 kWh;
-    PG 10 kW;
-    IC UNITY;
-};
-}
+    object inverter
+    {
+        rated_power 200 kW;
+        object battery
+        {
+            generator_status ONLINE;
+            generator_mode CONSTANT_PQ;
+            rfb_size MED_COMMERCIAL;
+            use_internal_battery_model TRUE;
+            state_of_charge 50%;
+            battery_state DISCHARGING;
+            battery_load 100 kW;
+        };
+    };
 // Task 2 - Add 4 residential buildings to load 2
 object building:..4
 {
