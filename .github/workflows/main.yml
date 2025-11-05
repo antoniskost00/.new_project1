@@ -10,34 +10,51 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: lfenergy/arras:develop
-    
-    steps:
-    - uses: actions/checkout@v3
 
-    - name: Get NSRDB credentials
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # --- NSRDB credentials ---
+    - name: Setup NSRDB credentials
+      env:
+        NSRDB_CREDENTIAL: ${{ secrets.NSRDB_CREDENTIAL }}
       run: |
         mkdir -p $HOME/.nsrdb
         printf '%s' "$NSRDB_CREDENTIAL" > $HOME/.nsrdb/credentials.json
+
+    # --- Ensure GridLAB-D binary is in PATH ---
+    - name: Add GridLAB-D to PATH
+      run: echo "/usr/local/opt/gridlabd/4.3.17-251101-develop-ubuntu_24-x86_64/bin:$PATH" >> $GITHUB_PATH
+
+    # --- Cache weather file if exists ---
     - name: Cache weather file
       id: weather
       uses: actions/cache@v3
       with:
-        path: weather@9q8vq2.csv
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('weather@9q8vq2.csv') }}
+        path: weather.csv
+        key: ${{ runner.os }}-weather-${{ hashFiles('weather.csv') }}
         restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: List working directory
-      run: ls -l
-    - name: Generate historical.glm if missing
-      run: gridlabd-python -m gridlabd.nsrdb_weather -y=2020 -p="37.5,-122.4" -g=historical.glm
+          ${{ runner.os }}-weather-
+
+    # --- Generate historical.glm if missing ---
+    - name: Generate historical.glm
+      run: |
+        if [ ! -f historical.glm ]; then
+          gridlabd-python -m gridlabd.nsrdb_weather -y=2020 -p="37.5,-122.4" -g=historical.glm
+        fi
+
+    # --- List GLM files for debug ---
+    - name: List GLM files
+      run: ls -lh *.glm
+
+    # --- Run main simulation ---
     - name: Run simulation
       run: gridlabd main.glm
-      
+
+    # --- Upload results ---
     - name: Save results
       uses: actions/upload-artifact@v4
       with:
         name: IEEE 123 voltage profile
         path: IEEE-123-voltage-profile.png
-      
