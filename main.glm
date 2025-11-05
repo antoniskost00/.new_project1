@@ -17,14 +17,20 @@ schedule setpoint
     * * * 10-4 6-0 18.0;
     * * * 5-9 6-0 24.0; 
 }
-object meter{
-   parent load_1;
-   name meter_1;
-   phases AN;
+object meter
+{
+    name meter_1;
+    parent load_1;           
+    phases AN;
+}
+
+
+
+
 object building
 {
     building_type RETAIL;
-
+    parent meter_1;
     // inputs
     NH 4;
     floor_area 150 m^2;
@@ -40,7 +46,7 @@ object building
     BS 10 kWh;
     PG 10 kW;
     IC UNITY;
-};
+
 }
 // Task 2 - Add 4 residential buildings to load 2
 object building:..4
