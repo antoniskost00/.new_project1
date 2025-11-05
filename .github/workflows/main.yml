@@ -18,8 +18,6 @@ jobs:
       run: |
         mkdir -p $HOME/.nsrdb
         printf '%s' "$NSRDB_CREDENTIAL" > $HOME/.nsrdb/credentials.json
-        env:
-          NSRDB_CREDENTIAL: ${{ secrets.NSRDB_CREDENTIAL }}
     - name: Cache weather file
       id: weather
       uses: actions/cache@v3
