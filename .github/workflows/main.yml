@@ -15,12 +15,11 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Get NSRDB credentials
-      env:
-        NSRDB_CREDENTIAL: ${{ secrets.NSRDB_CREDENTIAL }}
       run: |
         mkdir -p $HOME/.nsrdb
-        echo $NSRDB_CREDENTIAL > $HOME/.nsrdb/credentials.json
-
+        printf '%s' "$NSRDB_CREDENTIAL" > $HOME/.nsrdb/credentials.json
+        env:
+          NSRDB_CREDENTIAL: ${{ secrets.NSRDB_CREDENTIAL }}
     - name: Cache weather file
       id: weather
       uses: actions/cache@v3
