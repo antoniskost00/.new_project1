@@ -22,11 +22,6 @@ object meter
     name meter_1;
     parent load_1;           
     phases AN;
-}
-
-
-
-
 object building
 {
     building_type RETAIL;
@@ -46,7 +41,7 @@ object building
     BS 10 kWh;
     PG 10 kW;
     IC UNITY;
-
+};
 }
 // Task 2 - Add 4 residential buildings to load 2
 object building:..4
