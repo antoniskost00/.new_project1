@@ -14,7 +14,7 @@ object meter
     phases CN;
     object inverter
     {
-        rated_power 20KW;
+        rated_power 20kW;
         object battery
         {
             generator_status ONLINE;
@@ -22,8 +22,8 @@ object meter
             rfb_size HOUSEHOLD;
             use_internal_battery_model TRUE;
             battery_state CHARGING;
-            rated_power 10KW;
-            battery_load -10KW;
+            rated_power 10kW;
+            battery_load -10kW;
             
         };
 };
