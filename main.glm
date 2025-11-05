@@ -2,9 +2,8 @@
 #model get IEEE/123
 #endif
 #include "123.glm"
-// Task 1 - Add a 100kW
-module generators;
-module climate;
+
+// Task 1 - Add a commercial building to load 1
 schedule setpoint
 {
     * 7-17 * * 1-5 22.0;
@@ -13,26 +12,28 @@ schedule setpoint
     * * * 10-4 6-0 18.0;
     * * * 5-9 6-0 24.0; 
 }
-module generators;
-object meter
+object building
 {
     parent load_1;
-    nominal_voltage 2401.7771;
-    phases ABCN;
-    object inverter
-    {
-        rated_power 200 kW;
-        object battery
-        {
-            generator_status ONLINE;
-            generator_mode CONSTANT_PQ;
-            rfb_size MED_COMMERCIAL;
-            use_internal_battery_model TRUE;
-            state_of_charge 50%;
-            battery_state DISCHARGING;
-            battery_load 100 kW;
-        };
-    }
+    building_type RETAIL;
+
+    // inputs
+    NH 4;
+    floor_area 150 m^2;
+    TS setpoint;
+
+    temperature_source "forecast.temperature";
+    electric_heat TRUE;
+    electrification_fraction 0.5;
+    electrification_efficiency 2.0;
+    occupancy 4;
+    PV 200 sf;
+    PX 10 kW;
+    BS 10 kWh;
+    PG 10 kW;
+    IC UNITY;
+}
+
 // Task 2 - Add 4 residential buildings to load 2
 object building:..4
 {
@@ -128,183 +129,4 @@ clock
     stoptime "${NOAA_FORECAST_STOPTIME}";
 }
 
-#output "IEEE-123-voltage-profile.png" -t profile -l 10
-
-object meter
-{
-    parent load_75;
-    nominal_voltage 2401.7771;
-    phases CN;
-    object inverter
-    {
-        rated_power 20kW;
-        object battery
-        {
-            generator_status ONLINE;
-            generator_mode CONSTANT_PQ;
-            rfb_size HOUSEHOLD;
-            use_internal_battery_model TRUE;
-            battery_state CHARGING;
-            rated_power 20kW;
-            battery_load -20kW;
-            
-        };
-};
-}
-
-object meter
-{
-    parent load_75;
-    nominal_voltage 2401.7771;
-    phases CN;
-    object inverter
-    {
-        rated_power 20kW;
-        object battery
-        {
-            generator_status ONLINE;
-            generator_mode CONSTANT_PQ;
-            rfb_size HOUSEHOLD;
-            use_internal_battery_model TRUE;
-            battery_state WAITING;
-            rated_power 10kW;
-            battery_load 0;
-            
-        };
-};
-}
-
-object meter
-{
-    parent load_75;
-    nominal_voltage 2401.7771;
-    phases CN;
-    object inverter
-    {
-        rated_power 20kW;
-        object battery
-        {
-            generator_status ONLINE;
-            generator_mode CONSTANT_PQ;
-            rfb_size HOUSEHOLD;
-            use_internal_battery_model TRUE;
-            battery_state WAITING;
-            rated_power 10kW;
-            battery_load 10kW;
-            
-        };
-};
-}
-
-object meter
-{
-    parent load_1;
-    nominal_voltage 2401.7771;
-    phases ABCN;
-    object inverter
-    {
-        rated_power 200 kW;
-        object battery
-        {
-            generator_status ONLINE;
-            generator_mode CONSTANT_PQ;
-            rfb_size MED_COMMERCIAL;
-            use_internal_battery_model TRUE;
-            state_of_charge 50%;
-            battery_state DISCHARGING;
-            battery_load 100 kW;
-        };
-    };
-}
-// Task 1 - Add a diesel generation to Node 8 (1 cyl, 2 stroke, speed 360 rpm, torque 680 N)
-module generators;
-object diesel_dg 
-{
-    parent node_8;
-    Gen_mode CONSTANTPQ;
-    Gen_status ONLINE;
-    Gen_type SYNCHRONOUS;
-    pf 1.0;
-    cylinders 1;
-    stroke 2;
-    speed 360 1/min;
-    torque 680;
-}
-
-
-object meter
-{
-    name meter_10;
-    parent load_10;
-    phases AN;
-    nominal_voltage 2401.7711;
-    object inverter 
-    {
-        name inv_10;
-        phases AN;
-        rated_power 250 kVA;
-        object solar 
-        {
-            name solar_10;
-            parent inv_10;
-            rated_power 40.0 kVA;
-            area 1000 sf;
-            tilt_angle 45.0 deg;
-            efficiency 13.5%;
-            orientation_azimuth 180;
-        };
-    };
-}
-
-// Task 3 - Wind turbine on load 28
-object meter {
-    name meter_28;
-    parent load_28;
-    phases ABCN;
-    nominal_voltage 2401.7711;
-    object windturb_dg 
-    {
-        parent meter_28;
-        phases ABCN;
-        Gen_status ONLINE;
-        Gen_type INDUCTION;
-        Gen_mode CONSTANTP;
-        Turbine_Model GENERIC_IND_SMALL;
-        Rated_VA 100 kVA;
-    };
-}
-
-
-
-
-
-
-object load 
-{
-    name load_115;
-    groupid nodevolts;
-    phases AN;
-    constant_power_A @load_114; // copy from load_114
-    nominal_voltage 2401.7771;
-}
-object overhead_line 
-{
-    name line114to115;
-    phases AN;
-    from load_114;
-    to load_115;
-    length 325.00;
-    configuration lc309;
-}
-object load 
-{
-    parent load_115;
-    name load_116;
-    groupid nodevolts;
-    phases AN;
-    
-    constant_power_A_real (load_114.constant_power_A_real*2); // double load_114
-    constant_power_A_reac (load_114.constant_power_A_reac*2); // double load_114
-    nominal_voltage 2401.7771;
-}
 #output "IEEE-123-voltage-profile.png" -t profile -l 10
