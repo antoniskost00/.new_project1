@@ -9,13 +9,9 @@ modify load_4.constant_power_C 0+0j kVA;
 module generators;
 module climate;
 
-
-// Task 2 - Get historical weather data
-#ifmissing "historical.glm"
-#python -m gridlabd.nsrdb_weather -y=2020 -p=37.5,-122.4 -g=historical.glm
-#endif
-#include "historical.glm"
-
+// Task 3 - Get realtime weather data
+#python -m gridlabd.metar2glm -c realtime KSFO >realtime.glm
+#include "realtime.glm"
 
 
 
