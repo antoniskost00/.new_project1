@@ -2,5 +2,5 @@
 #model get IEEE/123
 #endif
 #include "123.glm"
-modify load_1.constant_power_A 48.0+24.0j kVA;
+#modify load_1.constant_power_A 48.0+24.0j kVA;
 #output "IEEE-123-voltage-profile.png" -t profile -l 10
