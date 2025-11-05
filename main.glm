@@ -10,7 +10,7 @@ module generators;
 module climate;
 
 // Task 4 - Get forecast weather data
-#python -m gridlabd.noaa_forecast -p=37.5,-122.4 -c=forecast.csv -n=forecast -g=forecast.glm
+#python -m gridlabd.noaa_forecast -p=47.6062,-122.3321 -c=forecast.csv -n=forecast -g=forecast.glm
 #include "forecast.glm"
 clock
 {
