@@ -19,6 +19,8 @@ schedule setpoint
 }
 object meter{
    parent load_1;
+   name meter_1;
+   phases AN;
 object building
 {
     building_type RETAIL;
