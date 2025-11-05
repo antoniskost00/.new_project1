@@ -3,4 +3,23 @@
 #endif
 #include "123.glm"
 modify load_1.constant_power_A 48.0+24.0j kVA;
+modify load_2.constant_impedance_B 100+10j Ohm;
+modify load_4.constant_power_C 0+0j kVA;
+object load 
+{
+    name load_115;
+    groupid nodevolts;
+    phases AN;
+    constant_power_A @load_114; // copy from load_114
+    nominal_voltage 2401.7771;
+}
+object overhead_line 
+{
+    name line114to115;
+    phases AN;
+    from load_114;
+    to load_115;
+    length 325.00;
+    configuration lc309;
+}
 #output "IEEE-123-voltage-profile.png" -t profile -l 10
