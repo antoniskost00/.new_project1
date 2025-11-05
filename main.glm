@@ -7,6 +7,28 @@ modify load_2.constant_impedance_B 100+10j Ohm;
 modify load_4.constant_power_C 0+0j kVA;
 // Task 1 - Add a 100kW
 module generators;
+
+// Task 1 - set the clock
+clock
+{
+    timezone America/Los_Angeles;
+    starttime "2020-01-01 12:00:00 PDT";
+    stoptime "2021-01-01 12:00:00 PDT";
+}
+
+// Task 2 - Load weather data 
+#ifmissing "CA-Los_Angeles_Intl_Arpt.glm"
+#weather get CA-Los_Angeles_Intl_Arpt
+#endif
+#input "CA-Los_Angeles_Intl_Arpt.tmy3"
+
+
+
+
+
+
+
+
 object meter
 {
     parent load_75;
@@ -108,17 +130,7 @@ object diesel_dg
     torque 680;
 }
 
-// Task 2 - Add 4kW 100 sf solar panel on load 10 (tilt 45, efficiency 0.135, south facing, fixed) 
-#ifmissing "CA-Chino_Airport.glm"
-#weather get CA-Chino_Airport
-#endif
-#input "CA-Chino_Airport.tmy3"
-clock
-{
-    timezone America/Los_Angeles;
-    starttime "2020-07-01 12:00:00 PDT";
-    stoptime "2020-07-01 12:00:00 PDT";
-}
+
 object meter
 {
     name meter_10;
