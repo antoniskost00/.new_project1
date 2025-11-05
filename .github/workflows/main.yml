@@ -28,7 +28,8 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
-
+    - name: List working directory
+      run: ls -l
     - name: Run simulation
       run: gridlabd main.glm
       
