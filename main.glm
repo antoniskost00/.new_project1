@@ -32,7 +32,7 @@ object meter
             battery_state DISCHARGING;
             battery_load 100 kW;
         };
-    };
+    }
 // Task 2 - Add 4 residential buildings to load 2
 object building:..4
 {
