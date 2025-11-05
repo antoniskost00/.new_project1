@@ -22,12 +22,57 @@ object meter
             rfb_size HOUSEHOLD;
             use_internal_battery_model TRUE;
             battery_state CHARGING;
-            rated_power 10kW;
-            battery_load -10kW;
+            rated_power 20kW;
+            battery_load -20kW;
             
         };
 };
 }
+
+object meter
+{
+    parent load_75;
+    nominal_voltage 2401.7771;
+    phases CN;
+    object inverter
+    {
+        rated_power 20kW;
+        object battery
+        {
+            generator_status ONLINE;
+            generator_mode CONSTANT_PQ;
+            rfb_size HOUSEHOLD;
+            use_internal_battery_model TRUE;
+            battery_state WAITING;
+            rated_power 10kW;
+            battery_load 0;
+            
+        };
+};
+}
+
+object meter
+{
+    parent load_75;
+    nominal_voltage 2401.7771;
+    phases CN;
+    object inverter
+    {
+        rated_power 20kW;
+        object battery
+        {
+            generator_status ONLINE;
+            generator_mode CONSTANT_PQ;
+            rfb_size HOUSEHOLD;
+            use_internal_battery_model TRUE;
+            battery_state WAITING;
+            rated_power 10kW;
+            battery_load 10kW;
+            
+        };
+};
+}
+
 object meter
 {
     parent load_1;
