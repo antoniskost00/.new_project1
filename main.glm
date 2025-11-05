@@ -9,27 +9,14 @@ modify load_4.constant_power_C 0+0j kVA;
 module generators;
 module climate;
 
-// Task 3 - Get realtime weather data
-#python -m gridlabd.metar2glm -c realtime KSFO >realtime.glm
-#include "realtime.glm"
-
-
-
-
-
-
-
-
-
-
-
-
-// Task 1 - set the clock
+// Task 4 - Get forecast weather data
+#python -m gridlabd.noaa_forecast -p=37.5,-122.4 -c=forecast.csv -n=forecast -g=forecast.glm
+#include "forecast.glm"
 clock
 {
-    timezone America/Los_Angeles;
-    starttime "2020-01-01 12:00:00 PDT";
-    stoptime "2020-01-08 12:00:00 PDT";
+    timezone "${NOAA_FORECAST_TIMEZONE}";
+    starttime "${NOAA_FORECAST_STARTTIME}";
+    stoptime "${NOAA_FORECAST_STOPTIME}";
 }
 
 
