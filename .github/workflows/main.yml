@@ -9,17 +9,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: lfenergy/arras:latest
+    container: lfenergy/arras:develop
     
     steps:
     - uses: actions/checkout@v3
 
-    - name: Cache IEEE 123 model
-      id: ieee-123-model
+    - name: Get NSRDB credentials
+      env:
+        NSRDB_CREDENTIAL: ${{ secrets.NSRDB_CREDENTIAL }}
+      run: |
+        mkdir -p $HOME/.nsrdb
+        echo $NSRDB_CREDENTIAL > $HOME/.nsrdb/credentials.json
+
+    - name: Cache weather file
+      id: weather
       uses: actions/cache@v3
       with:
-        path: 123.glm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('123.glm') }}
+        path: weather@9q8vq2.csv
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('weather@9q8vq2.csv') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
@@ -33,3 +40,4 @@ jobs:
       with:
         name: IEEE 123 voltage profile
         path: IEEE-123-voltage-profile.png
+      
