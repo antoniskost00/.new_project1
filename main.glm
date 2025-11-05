@@ -10,7 +10,7 @@ module generators;
 module climate;
 object meter
 {
-    name load_1;          // κρατάμε το ίδιο όνομα
+    name meter_1
     parent node_1;        // upstream node
     phases ABCN;
     nominal_voltage 2401.7771;
