@@ -56,7 +56,6 @@ object building
     TS setpoint;
 
     temperature_source "forecast.temperature";
-    solar_source "forecast.solar_global";
     electric_heat TRUE;
     electrification_fraction 0.3;
     electrification_efficiency 1.8;
