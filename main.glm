@@ -9,8 +9,8 @@ module tape
 }
 // Task 1 - Play a load into load 114
 object meter{
-object player
     parent load_114;
+object player
 { 
     file "load_114.csv";
     property "constant_power_A";
