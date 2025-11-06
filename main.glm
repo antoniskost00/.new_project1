@@ -46,7 +46,7 @@ object building
 // Task 2 - Add 4 residential buildings to load 2
 object building
 {
-    name building_1;
+    name building_2;
     parent load_2;
     floor_area 1500 sf;
     dt 1h;
