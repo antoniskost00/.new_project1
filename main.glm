@@ -9,9 +9,12 @@ module tape
 }
 // Task 1 - Play a load into load 114
 object meter{
+    name meter_114;
     parent load_114;
+}
 object player
-{ 
+{   
+    parent meter_114;
     file "load_114.csv";
     property "constant_power_A";
     loop 7;
@@ -19,6 +22,7 @@ object player
 // Task 2 - Record the voltage at load 114
 object recorder
 {
+    parent meter_114;
     file "voltage_114.csv";
     property "voltage_A.real";
     interval 1h;
