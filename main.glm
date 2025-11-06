@@ -14,15 +14,15 @@ object meter{
 }
 object player
 {   
-    parent meter_114;
+    parent load_114;
     file "load_114.csv";
-    property "power_A";
+    property "constant_power_A";
     loop 7;
 }
 // Task 2 - Record the voltage at load 114
 object recorder
 {
-    parent meter_114;
+    parent load_114;
     file "voltage_114.csv";
     property "voltage_A.real";
     interval 1h;
