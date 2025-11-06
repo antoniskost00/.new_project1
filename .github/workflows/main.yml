@@ -14,27 +14,28 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Get NSRDB credentials
-      env:
-        NSRDB_CREDENTIAL: ${{ secrets.NSRDB_CREDENTIAL }}
-      run: |
-        mkdir -p $HOME/.nsrdb
-        echo $NSRDB_CREDENTIAL > $HOME/.nsrdb/credentials.json
-    - name: Cache weather file
-      id: weather
+    - name: Cache IEEE 123 model
+      id: ieee-123-model
       uses: actions/cache@v3
       with:
-        path: weather@9q8vq2.csv
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('weather@9q8vq2.csv') }}
+        path: 123.glm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('123.glm') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-
+
     - name: Run simulation
       run: gridlabd main.glm
       
-    - name: Save results
+    - name: Save voltage profile
       uses: actions/upload-artifact@v4
       with:
         name: IEEE 123 voltage profile
         path: IEEE-123-voltage-profile.png
+      
+    - name: Save building loadshape
+      uses: actions/upload-artifact@v4
+      with:
+        name: Building 1 load
+        path: building_1.png
