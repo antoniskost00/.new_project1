@@ -8,20 +8,21 @@ module tape
     csv_header_type NAME;
 }
 // Task 1 - Play a load into load 114
+object meter{
 object player
-{
     parent load_114;
+{ 
     file "load_114.csv";
     property "constant_power_A";
     loop 7;
-}
+};
 // Task 2 - Record the voltage at load 114
 object recorder
 {
-    parent load_114;
     file "voltage_114.csv";
     property "voltage_A.real";
     interval 1h;
+};
 }
 // Task 3 - Setup the clock
 clock
