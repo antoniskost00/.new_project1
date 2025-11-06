@@ -48,6 +48,7 @@ object building
 {
     name building_2;
     parent load_2;
+    building
     floor_area 1500 sf;
     TS setpoint;
 
@@ -62,7 +63,7 @@ object building
     PG 10 kW;
     IC UNITY;
 
-    measured_demand_timestep 1wk;
+    measured_demand_timestep 1h;
     // Task 4 - Add recorder to building
     object recorder
     {
