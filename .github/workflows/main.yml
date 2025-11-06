@@ -28,14 +28,14 @@ jobs:
     - name: Run simulation
       run: gridlabd main.glm
       
+    - name: Save voltage plot
+      uses: actions/upload-artifact@v4
+      with:
+        name: Load 114 voltage
+        path: voltage_114.png
+      
     - name: Save voltage profile
       uses: actions/upload-artifact@v4
       with:
         name: IEEE 123 voltage profile
         path: IEEE-123-voltage-profile.png
-      
-    - name: Save building loadshape
-      uses: actions/upload-artifact@v4
-      with:
-        name: Building 2 load
-        path: building_2.png
