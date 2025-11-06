@@ -48,7 +48,7 @@ object building
 {
     name building_2;
     parent load_2;
-    building
+    
     floor_area 1500 sf;
     TS setpoint;
 
