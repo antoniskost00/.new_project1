@@ -18,7 +18,7 @@ object player
     file "load_114.csv";
     property "constant_power_A";
     loop 7;
-};
+}
 // Task 2 - Record the voltage at load 114
 object recorder
 {
@@ -26,7 +26,6 @@ object recorder
     file "voltage_114.csv";
     property "voltage_A.real";
     interval 1h;
-};
 }
 // Task 3 - Setup the clock
 clock
