@@ -43,35 +43,37 @@ object building
 
 }
 
-// Task 2 - Add 4 residential buildings to load 2
+// Task 8 - Add residential building to load 2
 object building
 {
     name building_2;
     parent load_2;
-    
-    floor_area 1500 sf;
+    building_type HOUSE;
+
+    // inputs
+    NH 3;
+    floor_area 120 m^2;
     TS setpoint;
 
     temperature_source "forecast.temperature";
+    solar_source "forecast.solar_global";
     electric_heat TRUE;
-    electrification_fraction 0.5;
-    electrification_efficiency 2.0;
-    occupancy 4;
-    PV 200 sf;
-    PX 10 kW;
-    BS 10 kWh;
-    PG 10 kW;
+    electrification_fraction 0.3;
+    electrification_efficiency 1.8;
+    occupancy 3;
+    PV 100 sf;
+    PX 5 kW;
+    BS 5 kWh;
+    PG 5 kW;
     IC UNITY;
 
-    measured_demand_timestep 1h;
-    // Task 4 - Add recorder to building
+    // Recorder to capture residential load
     object recorder
     {
-        file "building_1.csv";
+        file "building_2.csv";
         property measured_real_power,measured_reactive_power;
         interval 1h;
     };
-
 }
 
 // Task 5 - Use weather forecast
@@ -87,6 +89,6 @@ clock
 }
 
 // Task 7 - Plot output data
-#on_exit 0 gridlabd plot -i=building_1.csv -o=building_1.png --plot:grid
+#on_exit 0 gridlabd plot -i=building_2.csv -o=building_2.png --plot:grid
 
 #output "IEEE-123-voltage-profile.png" -t profile -l 10
