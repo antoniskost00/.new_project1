@@ -16,7 +16,7 @@ object player
 {   
     parent meter_114;
     file "load_114.csv";
-    property "constant_power_A";
+    property "power_A";
     loop 7;
 }
 // Task 2 - Record the voltage at load 114
